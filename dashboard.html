@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La Miette · Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --burgundy:#810B38; --cream:#F1E2D1; --sand:#DCC3AA;
+  --mahogany:#541A1A; --ink:#2a1414; --white:#fffdf9;
+  --line:rgba(84,26,26,.12);
+  --display:'Cormorant Garamond',serif;
+  --body:'Jost',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--body);background:var(--cream);color:var(--ink);min-height:100vh;display:flex}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;background:var(--mahogany);color:var(--cream);
+  padding:30px 22px;display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;
+}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-size:22px;font-weight:600;margin-bottom:40px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--burgundy);display:grid;place-items:center;font-style:italic}
+.side-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin:24px 0 10px;opacity:.7}
+.side-link{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 14px;border-radius:8px;font-size:14px;
+  color:rgba(241,226,209,.85);transition:all .2s;cursor:pointer;
+  border:0;background:transparent;width:100%;text-align:left;
+}
+.side-link:hover{background:rgba(241,226,209,.08);color:var(--cream)}
+.side-link.active{background:var(--burgundy);color:var(--cream)}
+.side-link .ico{width:18px;text-align:center}
+.side-foot{margin-top:auto;padding-top:20px;border-top:1px solid rgba(241,226,209,.1);font-size:12px;opacity:.6}
+
+/* MAIN */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{
+  background:var(--white);padding:18px 36px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.topbar h1{font-family:var(--display);font-size:26px;font-weight:600}
+.top-actions{display:flex;gap:12px;align-items:center}
+.btn{
+  padding:10px 20px;border-radius:8px;font-size:13px;letter-spacing:.05em;
+  border:1px solid transparent;transition:all .2s;font-weight:500;
+}
+.btn-primary{background:var(--burgundy);color:var(--cream)}
+.btn-primary:hover{background:var(--mahogany)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--burgundy);color:var(--burgundy)}
+.btn-danger{background:transparent;border-color:rgba(129,11,56,.3);color:var(--burgundy)}
+.btn-danger:hover{background:var(--burgundy);color:var(--cream);border-color:var(--burgundy)}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--burgundy);color:var(--cream);display:grid;place-items:center;font-size:13px;font-weight:500}
+
+.content{padding:36px;flex:1;overflow-y:auto}
+.view{display:none}
+.view.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:32px}
+.stat{background:var(--white);border-radius:12px;padding:22px;border:1px solid var(--line)}
+.stat-label{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--burgundy);font-weight:500}
+.stat-value{font-family:var(--display);font-size:38px;font-weight:600;margin-top:8px}
+.stat-trend{font-size:12px;color:rgba(42,20,20,.55);margin-top:4px}
+
+/* POSTS TABLE */
+.panel{background:var(--white);border-radius:12px;border:1px solid var(--line);overflow:hidden}
+.panel-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.panel-head h2{font-family:var(--display);font-size:22px;font-weight:600}
+.search{padding:9px 14px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:14px;width:260px;background:var(--white)}
+.search:focus{outline:none;border-color:var(--burgundy)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px 24px;text-align:left;font-size:14px;border-bottom:1px solid var(--line)}
+th{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(42,20,20,.55);font-weight:500;background:rgba(241,226,209,.3)}
+tbody tr:hover{background:rgba(241,226,209,.25)}
+tbody tr:last-child td{border-bottom:0}
+.row-title{font-weight:500;color:var(--ink)}
+.row-excerpt{font-size:12px;color:rgba(42,20,20,.55);margin-top:2px}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.pill-published{background:rgba(129,11,56,.1);color:var(--burgundy)}
+.pill-draft{background:rgba(84,26,26,.08);color:var(--mahogany)}
+.row-actions{display:flex;gap:8px;justify-content:flex-end}
+.icon-btn{background:none;border:1px solid var(--line);padding:6px 12px;border-radius:6px;font-size:12px;transition:all .2s}
+.icon-btn:hover{border-color:var(--burgundy);color:var(--burgundy)}
+.icon-btn.del:hover{border-color:var(--burgundy);background:var(--burgundy);color:var(--cream)}
+.empty{padding:60px;text-align:center;color:rgba(42,20,20,.5)}
+.empty h3{font-family:var(--display);font-size:24px;margin-bottom:8px;color:var(--ink)}
+
+/* EDITOR */
+.editor-grid{display:grid;grid-template-columns:1fr 320px;gap:24px}
+@media (max-width:1100px){.editor-grid{grid-template-columns:1fr}}
+.editor-main{background:var(--white);border-radius:12px;border:1px solid var(--line);padding:28px}
+.editor-side{display:flex;flex-direction:column;gap:18px}
+.side-card{background:var(--white);border-radius:12px;border:1px solid var(--line);padding:20px}
+.side-card h3{font-family:var(--display);font-size:18px;font-weight:600;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.field label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(42,20,20,.6);font-weight:500}
+.field input,.field select,.field textarea{
+  font-family:inherit;font-size:14px;padding:10px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--ink);
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--burgundy)}
+.title-input{font-family:var(--display)!important;font-size:32px!important;font-weight:600;padding:14px 0!important;border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important}
+.title-input:focus{border-bottom-color:var(--burgundy)!important}
+.toolbar{display:flex;gap:6px;padding:10px;background:rgba(241,226,209,.4);border-radius:8px;margin-bottom:12px;flex-wrap:wrap}
+.tb-btn{background:transparent;border:1px solid transparent;padding:6px 11px;border-radius:6px;font-size:13px;font-weight:500;transition:all .15s}
+.tb-btn:hover{background:var(--white);border-color:var(--line)}
+.tb-sep{width:1px;background:var(--line);margin:4px 4px}
+.editor-body{
+  min-height:420px;padding:16px;border:1px solid var(--line);border-radius:8px;
+  font-size:16px;line-height:1.7;font-family:var(--body);
+}
+.editor-body:focus{outline:none;border-color:var(--burgundy)}
+.editor-body h2{font-family:var(--display);font-size:28px;font-weight:600;margin:18px 0 10px}
+.editor-body h3{font-family:var(--display);font-size:22px;font-weight:600;margin:16px 0 8px}
+.editor-body p{margin-bottom:12px}
+.editor-body blockquote{border-left:3px solid var(--burgundy);padding-left:16px;margin:14px 0;font-style:italic;color:rgba(42,20,20,.7)}
+.editor-body ul,.editor-body ol{margin:12px 0 12px 24px}
+.editor-body a{color:var(--burgundy);text-decoration:underline}
+.editor-body img{max-width:100%;border-radius:8px;margin:12px 0}
+
+.cover-prev{
+  height:140px;border-radius:8px;background:linear-gradient(135deg,var(--sand),var(--cream));
+  display:grid;place-items:center;font-size:48px;color:var(--mahogany);margin-bottom:12px;
+  background-size:cover;background-position:center;
+}
+.help{font-size:12px;color:rgba(42,20,20,.55);margin-top:6px}
+
+/* RESPONSIVE */
+@media (max-width:820px){
+  body{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:relative;flex-direction:row;flex-wrap:wrap;padding:16px;gap:6px}
+  .brand{margin-bottom:0;width:100%}
+  .side-label,.side-foot{display:none}
+  .side-link{width:auto;padding:8px 12px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .content{padding:20px}
+  .topbar{padding:14px 20px;flex-wrap:wrap;gap:10px}
+  th,td{padding:10px}
+  .search{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <span class="brand-mark">L</span>
+    <span>La Miette</span>
+  </div>
+  <div class="side-label">Content</div>
+  <button class="side-link active" data-view="posts"><span class="ico">▤</span>All Posts</button>
+  <button class="side-link" data-view="editor"><span class="ico">✎</span>New Post</button>
+  <button class="side-link" data-view="comments"><span class="ico">❝</span>Comments</button>
+  <div class="side-label">Shop</div>
+  <button class="side-link" data-view="orders"><span class="ico">⌬</span>Orders</button>
+  <button class="side-link" data-view="menu"><span class="ico">⌗</span>Menu Items</button>
+  <div class="side-label">Settings</div>
+  <button class="side-link" data-view="settings"><span class="ico">⚙</span>General</button>
+  <a class="side-link" href="index.html"><span class="ico">↗</span>View Site</a>
+  <div class="side-foot">v1.0 · Logged in as Admin</div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <header class="topbar">
+    <h1 id="topTitle">All Posts</h1>
+    <div class="top-actions">
+      <button class="btn btn-ghost" id="newPostBtn">+ New Post</button>
+      <div class="avatar">LM</div>
+    </div>
+  </header>
+
+  <section class="content">
+
+    <!-- POSTS VIEW -->
+    <div class="view active" id="view-posts">
+      <div class="stats">
+        <div class="stat"><div class="stat-label">Total Posts</div><div class="stat-value" id="statTotal">0</div><div class="stat-trend">All content</div></div>
+        <div class="stat"><div class="stat-label">Published</div><div class="stat-value" id="statPub">0</div><div class="stat-trend">Live on site</div></div>
+        <div class="stat"><div class="stat-label">Drafts</div><div class="stat-value" id="statDraft">0</div><div class="stat-trend">In progress</div></div>
+        <div class="stat"><div class="stat-label">This Month</div><div class="stat-value" id="statMonth">0</div><div class="stat-trend">New posts</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Blog Posts</h2>
+          <input class="search" id="searchInput" type="search" placeholder="Search posts…" />
+        </div>
+        <table id="postsTable">
+          <thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Date</th><th></th></tr></thead>
+          <tbody id="postsBody"></tbody>
+        </table>
+        <div class="empty" id="emptyState" style="display:none">
+          <h3>No posts yet</h3>
+          <p>Click "New Post" to write your first journal entry.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDITOR VIEW -->
+    <div class="view" id="view-editor">
+      <div class="editor-grid">
+        <div class="editor-main">
+          <input class="title-input" id="postTitle" placeholder="Post title…" />
+          <div class="toolbar">
+            <button class="tb-btn" data-cmd="bold"><b>B</b></button>
+            <button class="tb-btn" data-cmd="italic"><i>I</i></button>
+            <button class="tb-btn" data-cmd="underline"><u>U</u></button>
+            <div class="tb-sep"></div>
+            <button class="tb-btn" data-cmd="formatBlock" data-val="h2">H2</button>
+            <button class="tb-btn" data-cmd="formatBlock" data-val="h3">H3</button>
+            <button class="tb-btn" data-cmd="formatBlock" data-val="p">¶</button>
+            <button class="tb-btn" data-cmd="formatBlock" data-val="blockquote">❝</button>
+            <div class="tb-sep"></div>
+            <button class="tb-btn" data-cmd="insertUnorderedList">• List</button>
+            <button class="tb-btn" data-cmd="insertOrderedList">1. List</button>
+            <div class="tb-sep"></div>
+            <button class="tb-btn" id="linkBtn">🔗 Link</button>
+            <button class="tb-btn" id="imgBtn">🖼 Image</button>
+            <div class="tb-sep"></div>
+            <button class="tb-btn" data-cmd="removeFormat">⌫ Clear</button>
+          </div>
+          <div class="editor-body" id="postBody" contenteditable="true" data-placeholder="Tell your story…"></div>
+          <p class="help" id="wordCount">0 words</p>
+        </div>
+        <aside class="editor-side">
+          <div class="side-card">
+            <h3>Publish</h3>
+            <div class="field">
+              <label>Status</label>
+              <select id="postStatus"><option value="draft">Draft</option><option value="published">Published</option></select>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn btn-ghost" id="saveDraft" style="flex:1">Save Draft</button>
+              <button class="btn btn-primary" id="publishBtn" style="flex:1">Publish</button>
+            </div>
+          </div>
+          <div class="side-card">
+            <h3>Details</h3>
+            <div class="field"><label>Category</label>
+              <select id="postCategory">
+                <option>Craft</option><option>Seasonal</option><option>Pairing</option>
+                <option>Recipes</option><option>News</option>
+              </select>
+            </div>
+            <div class="field"><label>Excerpt</label>
+              <textarea id="postExcerpt" rows="3" placeholder="Short preview text…"></textarea>
+            </div>
+            <div class="field"><label>Author</label>
+              <input id="postAuthor" type="text" value="Chef Anouk" />
+            </div>
+          </div>
+          <div class="side-card">
+            <h3>Cover Image</h3>
+            <div class="cover-prev" id="coverPrev">🥐</div>
+            <div class="field"><label>Image URL</label>
+              <input id="postCover" type="url" placeholder="https://…" />
+            </div>
+            <p class="help">Or leave blank for the default warm gradient cover.</p>
+          </div>
+          <div class="side-card">
+            <button class="btn btn-danger" id="deletePost" style="width:100%;display:none">Delete Post</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDER VIEWS -->
+    <div class="view" id="view-comments"><div class="panel"><div class="empty"><h3>No comments yet</h3><p>Reader comments will appear here.</p></div></div></div>
+    <div class="view" id="view-orders"><div class="panel"><div class="empty"><h3>No orders yet</h3><p>Custom order requests from the website will land here.</p></div></div></div>
+    <div class="view" id="view-menu"><div class="panel"><div class="empty"><h3>Menu management</h3><p>Edit pastries, breads, cakes & drinks here.</p></div></div></div>
+    <div class="view" id="view-settings"><div class="panel"><div class="empty"><h3>Settings</h3><p>Site name, contact info, and branding controls.</p></div></div></div>
+
+  </section>
+</main>
+
+<script>
+// ===== STATE =====
+const STORE = 'lamiette_posts';
+let posts = JSON.parse(localStorage.getItem(STORE) || 'null') || [
+  { id:1, title:'Why 36-hour fermentation matters', category:'Craft', status:'published', author:'Chef Anouk', excerpt:'How slow time builds flavor and texture.', body:'<p>Slow fermentation is the soul of our bread...</p>', cover:'', date:Date.now()-86400000*4 },
+  { id:2, title:'This summer\'s stone fruit lineup', category:'Seasonal', status:'published', author:'Chef Anouk', excerpt:'Apricot, peach, and cherry season is here.', body:'<p>Each summer we wait eagerly for the first stone fruit...</p>', cover:'', date:Date.now()-86400000*10 },
+  { id:3, title:'A new sourdough starter', category:'News', status:'draft', author:'Chef Anouk', excerpt:'We named her Geneviève.', body:'<p>Meet our newest team member...</p>', cover:'', date:Date.now()-86400000*1 },
+];
+let currentId = null;
+
+function save(){ localStorage.setItem(STORE, JSON.stringify(posts)); }
+
+// ===== NAV =====
+const views = document.querySelectorAll('.view');
+const links = document.querySelectorAll('.side-link[data-view]');
+const titles = { posts:'All Posts', editor:'Edit Post', comments:'Comments', orders:'Orders', menu:'Menu Items', settings:'Settings' };
+function go(view){
+  views.forEach(v => v.classList.toggle('active', v.id === 'view-'+view));
+  links.forEach(l => l.classList.toggle('active', l.dataset.view === view));
+  document.getElementById('topTitle').textContent = titles[view] || '';
+  if (view === 'posts') renderPosts();
+}
+links.forEach(l => l.addEventListener('click', () => go(l.dataset.view)));
+document.getElementById('newPostBtn').addEventListener('click', () => { openEditor(null); });
+
+// ===== POSTS LIST =====
+function renderPosts(filter=''){
+  const body = document.getElementById('postsBody');
+  const empty = document.getElementById('emptyState');
+  const f = filter.toLowerCase();
+  const list = posts.filter(p => p.title.toLowerCase().includes(f) || p.category.toLowerCase().includes(f));
+  body.innerHTML = list.map(p => `
+    <tr>
+      <td><div class="row-title">${escapeHtml(p.title)||'Untitled'}</div><div class="row-excerpt">${escapeHtml(p.excerpt||'').slice(0,80)}</div></td>
+      <td>${escapeHtml(p.category)}</td>
+      <td><span class="pill pill-${p.status}">${p.status}</span></td>
+      <td>${new Date(p.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn" onclick="openEditor(${p.id})">Edit</button>
+        <button class="icon-btn del" onclick="removePost(${p.id})">Delete</button>
+      </div></td>
+    </tr>
+  `).join('');
+  empty.style.display = list.length ? 'none' : 'block';
+  document.getElementById('postsTable').style.display = list.length ? '' : 'none';
+  // stats
+  const now = new Date();
+  document.getElementById('statTotal').textContent = posts.length;
+  document.getElementById('statPub').textContent = posts.filter(p=>p.status==='published').length;
+  document.getElementById('statDraft').textContent = posts.filter(p=>p.status==='draft').length;
+  document.getElementById('statMonth').textContent = posts.filter(p=>{const d=new Date(p.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()}).length;
+}
+function escapeHtml(s){return (s||'').replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+document.getElementById('searchInput').addEventListener('input', e => renderPosts(e.target.value));
+
+// ===== EDITOR =====
+function openEditor(id){
+  currentId = id;
+  const p = id ? posts.find(x => x.id===id) : null;
+  document.getElementById('postTitle').value = p?.title || '';
+  document.getElementById('postBody').innerHTML = p?.body || '';
+  document.getElementById('postStatus').value = p?.status || 'draft';
+  document.getElementById('postCategory').value = p?.category || 'Craft';
+  document.getElementById('postExcerpt').value = p?.excerpt || '';
+  document.getElementById('postAuthor').value = p?.author || 'Chef Anouk';
+  document.getElementById('postCover').value = p?.cover || '';
+  updateCover(p?.cover || '');
+  updateWordCount();
+  document.getElementById('deletePost').style.display = id ? 'block' : 'none';
+  go('editor');
+}
+
+function collect(){
+  return {
+    id: currentId || Date.now(),
+    title: document.getElementById('postTitle').value.trim(),
+    body: document.getElementById('postBody').innerHTML,
+    status: document.getElementById('postStatus').value,
+    category: document.getElementById('postCategory').value,
+    excerpt: document.getElementById('postExcerpt').value.trim(),
+    author: document.getElementById('postAuthor').value.trim(),
+    cover: document.getElementById('postCover').value.trim(),
+    date: Date.now(),
+  };
+}
+
+function persist(status){
+  const data = collect();
+  if (!data.title){ alert('Please add a title before saving.'); return; }
+  if (status) data.status = status;
+  const i = posts.findIndex(p => p.id === data.id);
+  if (i >= 0) posts[i] = { ...posts[i], ...data };
+  else posts.unshift(data);
+  currentId = data.id;
+  save();
+  flash(status === 'published' ? 'Published ✓' : 'Saved ✓');
+}
+function flash(msg){
+  const b = document.getElementById('publishBtn');
+  const original = b.textContent; b.textContent = msg;
+  setTimeout(()=>b.textContent = original, 1200);
+}
+
+document.getElementById('saveDraft').addEventListener('click', () => persist('draft'));
+document.getElementById('publishBtn').addEventListener('click', () => persist('published'));
+document.getElementById('deletePost').addEventListener('click', () => {
+  if (currentId && confirm('Delete this post permanently?')){
+    posts = posts.filter(p => p.id !== currentId);
+    save(); go('posts');
+  }
+});
+window.removePost = function(id){
+  if (confirm('Delete this post permanently?')){
+    posts = posts.filter(p => p.id !== id);
+    save(); renderPosts(document.getElementById('searchInput').value);
+  }
+};
+
+// ===== TOOLBAR =====
+document.querySelectorAll('.tb-btn[data-cmd]').forEach(b => {
+  b.addEventListener('click', e => {
+    e.preventDefault();
+    document.execCommand(b.dataset.cmd, false, b.dataset.val || null);
+    document.getElementById('postBody').focus();
+  });
+});
+document.getElementById('linkBtn').addEventListener('click', () => {
+  const url = prompt('Link URL'); if (url) document.execCommand('createLink', false, url);
+});
+document.getElementById('imgBtn').addEventListener('click', () => {
+  const url = prompt('Image URL'); if (url) document.execCommand('insertImage', false, url);
+});
+
+// ===== WORD COUNT + COVER =====
+const body = document.getElementById('postBody');
+function updateWordCount(){
+  const t = body.innerText.trim();
+  const n = t ? t.split(/\s+/).length : 0;
+  document.getElementById('wordCount').textContent = `${n} words`;
+}
+body.addEventListener('input', updateWordCount);
+
+document.getElementById('postCover').addEventListener('input', e => updateCover(e.target.value));
+function updateCover(url){
+  const el = document.getElementById('coverPrev');
+  if (url){ el.style.backgroundImage = `url(${url})`; el.textContent = ''; }
+  else { el.style.backgroundImage = ''; el.textContent = '🥐'; }
+}
+
+// initial
+renderPosts();
+</script>
+</body>
+</html>

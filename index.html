@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>La Miette — Artisan French Bakery</title>
+<meta name="description" content="La Miette is an artisan French bakery serving fresh-baked pastries, sourdough breads, custom cakes, and specialty coffee daily." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">L</span>
+      <span class="brand-name">La Miette</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">Our Story</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#journal">Journal</a>
+      <a href="#contact">Contact</a>
+      <a href="#order" class="btn btn-primary nav-cta">Order Now</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <span class="eyebrow">Est. 2008 · Handcrafted Daily</span>
+      <h1 class="display">
+        Baked with <em>patience</em>,<br/>served with <em>love</em>.
+      </h1>
+      <p class="lead">
+        Slow-fermented sourdoughs, buttery laminated pastries, and bespoke
+        celebration cakes — made every morning in our small neighborhood bakery.
+      </p>
+      <div class="hero-ctas">
+        <a href="#order" class="btn btn-primary btn-lg">Place an Order</a>
+        <a href="#menu" class="btn btn-ghost btn-lg">Explore the Menu →</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>4.9★</strong><span>800+ reviews</span></div>
+        <div><strong>17yr</strong><span>baking craft</span></div>
+        <div><strong>6am</strong><span>fresh daily</span></div>
+      </div>
+    </div>
+    <div class="hero-art reveal">
+      <div class="hero-card hero-card-1"><img src="images/croissant.jpg" alt="Fresh croissants" /></div>
+      <div class="hero-card hero-card-2"><img src="images/pain-au-chocolat.jpg" alt="Pain au chocolat" /></div>
+      <div class="hero-card hero-card-3"><img src="images/cake.jpg" alt="Layered cake" /></div>
+      <div class="hero-badge">
+        <span>Today's<br/>Special</span>
+        <strong>Pain au Chocolat</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Sourdough Loaves</span><span>•</span>
+    <span>Almond Croissants</span><span>•</span>
+    <span>Custom Wedding Cakes</span><span>•</span>
+    <span>Single-Origin Espresso</span><span>•</span>
+    <span>Macarons</span><span>•</span>
+    <span>Seasonal Tarts</span><span>•</span>
+    <span>Sourdough Loaves</span><span>•</span>
+    <span>Almond Croissants</span><span>•</span>
+    <span>Custom Wedding Cakes</span><span>•</span>
+    <span>Single-Origin Espresso</span><span>•</span>
+    <span>Macarons</span><span>•</span>
+    <span>Seasonal Tarts</span><span>•</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="container about-grid">
+    <div class="about-photos reveal">
+      <div class="photo p1"><img src="images/baker.jpg" alt="Our baker at work" /></div>
+      <div class="photo p2"><img src="images/wheat.jpg" alt="Fresh wheat" /></div>
+      <div class="photo p3"><img src="images/pretzel.jpg" alt="Handmade pretzels" /></div>
+    </div>
+    <div class="about-copy reveal">
+      <span class="eyebrow">Our Story</span>
+      <h2 class="display">A tiny bakery with <em>big intentions</em>.</h2>
+      <p>
+        La Miette began in 2008 as a one-oven shop on a quiet street.
+        Today we still mill our own flour, ferment our doughs for 36 hours,
+        and pull every pastry by hand before sunrise.
+      </p>
+      <p>
+        Our philosophy is simple: real ingredients, unhurried time, and the
+        kind of warmth you can only get from a place that loves what it makes.
+      </p>
+      <div class="about-stats">
+        <div><strong>17</strong><span>Years Baking</span></div>
+        <div><strong>120+</strong><span>Original Recipes</span></div>
+        <div><strong>4.9</strong><span>Avg Rating</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="section section-cream" id="menu">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Menu</span>
+      <h2 class="display">Made fresh, <em>every morning</em>.</h2>
+    </div>
+    <div class="tabs reveal">
+      <button class="tab active" data-tab="pastries">Pastries</button>
+      <button class="tab" data-tab="breads">Breads</button>
+      <button class="tab" data-tab="cakes">Cakes</button>
+      <button class="tab" data-tab="drinks">Drinks</button>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<!-- SPECIALS -->
+<section class="specials">
+  <div class="container specials-grid">
+    <div><strong>Mon–Fri</strong><span>Buy 6 croissants, get 2 free</span></div>
+    <div><strong>Saturday</strong><span>Fresh sourdough until noon</span></div>
+    <div><strong>Sunday</strong><span>Brunch boxes for 4 — $48</span></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" id="gallery">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Gallery</span>
+      <h2 class="display">A peek inside <em>our kitchen</em>.</h2>
+    </div>
+    <div class="gallery reveal">
+      <div class="g g1"><img src="images/storefront.jpg" alt="Our storefront" /><span>Our storefront</span></div>
+      <div class="g g2"><img src="images/sourdough.jpg" alt="Country loaves" /><span>Country loaves</span></div>
+      <div class="g g3"><img src="images/cake.jpg" alt="Cake studio" /><span>Cake studio</span></div>
+      <div class="g g4"><img src="images/tart.jpg" alt="Seasonal tarts" /><span>Seasonal tarts</span></div>
+      <div class="g g5"><img src="images/coffee.jpg" alt="Espresso bar" /><span>Espresso bar</span></div>
+      <div class="g g6"><img src="images/macarons.jpg" alt="Macarons" /><span>Petit fours</span></div>
+    </div>
+    <div class="center mt-4">
+      <a href="#" class="btn btn-ghost">Follow us on Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="section section-dark" id="order">
+  <div class="container order-grid">
+    <div class="reveal">
+      <span class="eyebrow light">Custom Orders</span>
+      <h2 class="display light">Celebrating something <em>special</em>?</h2>
+      <p class="light-muted">
+        Birthdays, weddings, corporate gifts — tell us what you have in mind
+        and we'll craft it from scratch. Please order at least 72 hours in advance.
+      </p>
+      <ul class="bullets light-muted">
+        <li>✦ Custom-flavored cakes & tiered designs</li>
+        <li>✦ Pastry platters for events</li>
+        <li>✦ Branded corporate gift boxes</li>
+      </ul>
+    </div>
+    <form class="form card-form reveal" id="orderForm">
+      <div class="row">
+        <label>Full Name<input required name="name" type="text" placeholder="Jane Doe" /></label>
+        <label>Email<input required name="email" type="email" placeholder="jane@email.com" /></label>
+      </div>
+      <div class="row">
+        <label>Occasion
+          <select name="occasion">
+            <option>Birthday</option><option>Wedding</option>
+            <option>Corporate</option><option>Just because</option>
+          </select>
+        </label>
+        <label>Date<input required name="date" type="date" /></label>
+      </div>
+      <label>Notes<textarea name="notes" rows="4" placeholder="Tell us about flavors, size, allergies…"></textarea></label>
+      <button class="btn btn-primary btn-lg" type="submit">Submit Request</button>
+    </form>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Kind Words</span>
+      <h2 class="display">From our <em>regulars</em>.</h2>
+    </div>
+    <div class="reviews reveal">
+      <article class="review">
+        <div class="stars">★★★★★</div>
+        <p>"The almond croissants are the best I've had outside of Paris. Truly."</p>
+        <div class="reviewer"><span class="avatar">EM</span><div><strong>Emma M.</strong><span>Saturday regular</span></div></div>
+      </article>
+      <article class="review">
+        <div class="stars">★★★★★</div>
+        <p>"Our wedding cake was a dream — beautiful, thoughtful, and somehow even more delicious."</p>
+        <div class="reviewer"><span class="avatar">JK</span><div><strong>Jamal K.</strong><span>Newlywed</span></div></div>
+      </article>
+      <article class="review">
+        <div class="stars">★★★★★</div>
+        <p>"I come for the bread, stay for the espresso. The whole place feels like a hug."</p>
+        <div class="reviewer"><span class="avatar">SP</span><div><strong>Sara P.</strong><span>Neighbor</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="section section-cream" id="journal">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Journal</span>
+      <h2 class="display">Notes from <em>the bakery</em>.</h2>
+    </div>
+    <div class="posts reveal" id="postsGrid">
+      <article class="post">
+        <div class="post-cover"><img src="images/sourdough.jpg" alt="Sourdough loaf" /></div>
+        <div class="post-body">
+          <span class="tag">Craft</span>
+          <h3>Why 36-hour fermentation matters</h3>
+          <p>How slow time builds the flavor and texture our sourdough is known for.</p>
+          <a href="#">Read more →</a>
+        </div>
+      </article>
+      <article class="post">
+        <div class="post-cover"><img src="images/tart.jpg" alt="Fruit tart" /></div>
+        <div class="post-body">
+          <span class="tag">Seasonal</span>
+          <h3>This summer's stone fruit lineup</h3>
+          <p>Apricot tarts, peach galettes, and a brand-new cherry clafoutis.</p>
+          <a href="#">Read more →</a>
+        </div>
+      </article>
+      <article class="post">
+        <div class="post-cover"><img src="images/coffee.jpg" alt="Coffee and pastry" /></div>
+        <div class="post-body">
+          <span class="tag">Pairing</span>
+          <h3>The perfect pastry & coffee match</h3>
+          <p>Our barista's guide to pairing espresso with your morning bake.</p>
+          <a href="#">Read more →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="container contact-grid">
+    <div class="reveal">
+      <span class="eyebrow">Visit Us</span>
+      <h2 class="display">Come say <em>bonjour</em>.</h2>
+      <ul class="info">
+        <li><strong>Address</strong><span>142 Rue des Boulangers<br/>Brooklyn, NY 11201</span></li>
+        <li><strong>Hours</strong><span>Tue–Fri 7am – 6pm<br/>Sat–Sun 8am – 4pm<br/>Closed Mondays</span></li>
+        <li><strong>Phone</strong><span>(718) 555-0142</span></li>
+        <li><strong>Email</strong><span>hello@lamiette.cafe</span></li>
+      </ul>
+    </div>
+    <form class="form card-form reveal" id="contactForm">
+      <label>Name<input required name="name" type="text" /></label>
+      <label>Email<input required name="email" type="email" /></label>
+      <label>Message<textarea required name="message" rows="5"></textarea></label>
+      <button class="btn btn-primary btn-lg" type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="container newsletter-inner reveal">
+    <div>
+      <h2 class="display">Crumbs in your <em>inbox</em>.</h2>
+      <p>Weekly recipes, seasonal specials, and the occasional secret menu drop.</p>
+    </div>
+    <form id="newsletterForm" class="newsletter-form">
+      <input required type="email" placeholder="your@email.com" name="email" />
+      <button class="btn btn-primary" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <a href="#top" class="brand brand-light">
+        <span class="brand-mark">L</span>
+        <span class="brand-name">La Miette</span>
+      </a>
+      <p class="muted">Artisan French bakery, since 2008.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="#about">Our Story</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#journal">Journal</a>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <p class="muted">Tue–Fri 7–6<br/>Sat–Sun 8–4<br/>Closed Mon</p>
+    </div>
+    <div>
+      <h4>Follow</h4>
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Pinterest</a>
+      <a href="dashboard.html">Admin</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2025 La Miette Bakery. All rights reserved.</span>
+    <span>Made with butter & love.</span>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script src="index.js"></script>
+</body>
+</html>
